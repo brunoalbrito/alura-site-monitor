@@ -7,7 +7,10 @@ import (
 )
 
 func main() {
-	exibeIntroducao()
+	nome, _ := develveNomeEIdade()
+	fmt.Println(nome)
+
+	exibeIntroducao(nome)
 	exibeMenu()
 
 	comandoEscolhido := leComando()
@@ -36,8 +39,13 @@ func main() {
 	}
 }
 
-func exibeIntroducao() {
+func develveNomeEIdade() (string, int) {
 	nome := "Bruno"
+	idade := 29
+	return nome, idade
+}
+
+func exibeIntroducao(nome string) {
 	versao := 0.1
 	fmt.Println("Olá, sr.", nome)
 	fmt.Println("O programa esta na versao", versao)
