@@ -7,6 +7,9 @@ import (
 	"time"
 )
 
+const tempoEmSegundosDeDelay = 5 * time.Second
+const quantidadeDeReposicoes = 5
+
 func main() {
 	nome, _ := develveNomeEIdade()
 	exibeIntroducao(nome)
@@ -64,12 +67,12 @@ func iniciarMonitoramento() {
 		"https://www.youtube.com",
 	}
 
-	for i := 0; i < 5; i++ {
+	for i := 0; i < quantidadeDeReposicoes; i++ {
 		for i, urlSite := range sites {
 			fmt.Println("Testando site", i, ":", urlSite)
 			testaSite(urlSite)
 		}
-		time.Sleep(5 * time.Second)
+		time.Sleep(tempoEmSegundosDeDelay)
 	}
 }
 
