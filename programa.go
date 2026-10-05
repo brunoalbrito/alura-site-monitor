@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -29,6 +30,7 @@ func main() {
 			fmt.Println("Não conheço esse comando")
 			os.Exit(-1)
 		}
+		fmt.Println("")
 	}
 }
 
@@ -61,11 +63,7 @@ func leComando() int {
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando")
 
-	sites := []string{
-		"https://www.google.com",
-		"https://www.alura.com.br",
-		"https://www.youtube.com",
-	}
+	sites := leSitesDoArquivo()
 
 	for i := 0; i < quantidadeDeReposicoes; i++ {
 		for i, urlSite := range sites {
@@ -73,17 +71,33 @@ func iniciarMonitoramento() {
 			testaSite(urlSite)
 		}
 		time.Sleep(tempoEmSegundosDeDelay)
+		fmt.Println("")
 	}
 }
 
 func testaSite(urlSite string) {
-	response, _ := http.Get(urlSite)
+	response, err := http.Get(urlSite)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
 
 	if response.StatusCode == 200 {
 		fmt.Println("Site:", urlSite, "foi carregado com sucesso")
 	} else {
 		fmt.Println("Site:", urlSite, "esta com problemas. Status Code:", response.StatusCode)
 	}
+}
+
+func leSitesDoArquivo() []string {
+	arquivo, err := os.ReadFile("sites-monitorados.txt")
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
+	}
+
+	sites := strings.Split(string(arquivo), "\n")
+	return sites
 }
 
 // func exibeNomes() {
