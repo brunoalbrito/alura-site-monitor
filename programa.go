@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
+	fmt.Println("Arrays e Slices")
+	exibeNomes()
+
 	nome, _ := develveNomeEIdade()
 	fmt.Println(nome)
 
@@ -74,4 +77,15 @@ func iniciarMonitoramento() {
 	} else {
 		fmt.Println("Site:", site, "esta com problemas. Status Code:", response.StatusCode)
 	}
+}
+
+func exibeNomes() {
+	nomes := []string{"Bruno", "Ana", "Marcos"}
+
+	fmt.Println("O meu slice contem", len(nomes), "com capacidade", cap(nomes))
+
+	nomes = append(nomes, "Anderson")
+
+	fmt.Println("O meu slice contem", len(nomes), "com capacidade", cap(nomes))
+	fmt.Println(nomes)
 }
