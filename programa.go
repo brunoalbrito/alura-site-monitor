@@ -7,12 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Arrays e Slices")
-	exibeNomes()
-
 	nome, _ := develveNomeEIdade()
-	fmt.Println(nome)
-
 	exibeIntroducao(nome)
 
 	for {
@@ -62,30 +57,30 @@ func leComando() int {
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando")
 
-	var sites [4]string
-	sites[0] = "https://www.google.com"
-	sites[1] = "https://www.alura.com.br"
-	sites[2] = "https://www.youtube.com"
+	sites := []string{
+		"https://www.google.com",
+		"https://www.alura.com.br",
+		"https://www.youtube.com",
+	}
 
-	fmt.Println(sites)
+	for _, site := range sites {
+		response, _ := http.Get(site)
 
-	site := "https://www.alura.com.br"
-	response, _ := http.Get(site)
-
-	if response.StatusCode == 200 {
-		fmt.Println("Site:", site, "foi carregado com sucesso")
-	} else {
-		fmt.Println("Site:", site, "esta com problemas. Status Code:", response.StatusCode)
+		if response.StatusCode == 200 {
+			fmt.Println("Site:", site, "foi carregado com sucesso")
+		} else {
+			fmt.Println("Site:", site, "esta com problemas. Status Code:", response.StatusCode)
+		}
 	}
 }
 
-func exibeNomes() {
-	nomes := []string{"Bruno", "Ana", "Marcos"}
+// func exibeNomes() {
+// 	nomes := []string{"Bruno", "Ana", "Marcos"}
 
-	fmt.Println("O meu slice contem", len(nomes), "com capacidade", cap(nomes))
+// 	fmt.Println("O meu slice contem", len(nomes), "com capacidade", cap(nomes))
 
-	nomes = append(nomes, "Anderson")
+// 	nomes = append(nomes, "Anderson")
 
-	fmt.Println("O meu slice contem", len(nomes), "com capacidade", cap(nomes))
-	fmt.Println(nomes)
-}
+// 	fmt.Println("O meu slice contem", len(nomes), "com capacidade", cap(nomes))
+// 	fmt.Println(nomes)
+// }
