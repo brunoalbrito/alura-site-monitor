@@ -11,6 +11,7 @@ import (
 const tempoEmSegundosDeDelay = 5 * time.Second
 const quantidadeDeReposicoes = 5
 const caminhoSitesMonitorados = "sites-monitorados.txt"
+const caminhoLogs = "logs.txt"
 
 func main() {
 	nome, _ := develveNomeEIdade()
@@ -24,6 +25,7 @@ func main() {
 			iniciarMonitoramento()
 		case 2:
 			fmt.Println("Exibindo Logs...")
+			imprimeLogs()
 		case 0:
 			fmt.Println("Saindo ...")
 			os.Exit(0)
@@ -106,7 +108,7 @@ func leSitesDoArquivo() []string {
 func registraLog(site string, status bool) {
 	data := time.Now().Format("02/01/2006 15:04:05")
 	logCompleto := fmt.Sprintf("Data: %s, site: %s, status: %v\n", data, site, status)
-	arquivo, err := os.OpenFile("log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	arquivo, err := os.OpenFile(caminhoLogs, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 
 	if err != nil {
 		fmt.Println("Erro ao abrir arquivo:", err)
@@ -116,6 +118,20 @@ func registraLog(site string, status bool) {
 	arquivo.WriteString(logCompleto)
 
 	defer arquivo.Close()
+}
+
+func imprimeLogs() {
+	arquivo, err := os.ReadFile(caminhoLogs)
+
+	if err != nil {
+		fmt.Printf("Erro ao imprimir logs", err)
+		return
+	}
+
+	linhas := strings.Split(string(arquivo), "\n")
+	for _, linha := range linhas {
+		fmt.Println(linha)
+	}
 }
 
 // func exibeNomes() {
