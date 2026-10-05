@@ -10,6 +10,7 @@ import (
 
 const tempoEmSegundosDeDelay = 5 * time.Second
 const quantidadeDeReposicoes = 5
+const caminhoSitesMonitorados = "sites-monitorados.txt"
 
 func main() {
 	nome, _ := develveNomeEIdade()
@@ -84,20 +85,37 @@ func testaSite(urlSite string) {
 
 	if response.StatusCode == 200 {
 		fmt.Println("Site:", urlSite, "foi carregado com sucesso")
+		registraLog(urlSite, true)
 	} else {
 		fmt.Println("Site:", urlSite, "esta com problemas. Status Code:", response.StatusCode)
+		registraLog(urlSite, false)
 	}
 }
 
 func leSitesDoArquivo() []string {
-	arquivo, err := os.ReadFile("sites-monitorados.txt")
+	arquivo, err := os.ReadFile(caminhoSitesMonitorados)
 
 	if err != nil {
 		fmt.Println("Ocorreu um erro", err)
 	}
 
-	sites := strings.Split(string(arquivo), "\n")
-	return sites
+	linhas := strings.Split(string(arquivo), "\n")
+	return linhas
+}
+
+func registraLog(site string, status bool) {
+	data := time.Now().Format("02/01/2006 15:04:05")
+	logCompleto := fmt.Sprintf("Data: %s, site: %s, status: %v\n", data, site, status)
+	arquivo, err := os.OpenFile("log.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		fmt.Println("Erro ao abrir arquivo:", err)
+		return
+	}
+
+	arquivo.WriteString(logCompleto)
+
+	defer arquivo.Close()
 }
 
 // func exibeNomes() {
