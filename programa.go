@@ -124,7 +124,7 @@ func imprimeLogs() {
 	arquivo, err := os.ReadFile(caminhoLogs)
 
 	if err != nil {
-		fmt.Printf("Erro ao imprimir logs", err)
+		fmt.Println("Erro ao imprimir logs", err)
 		return
 	}
 
