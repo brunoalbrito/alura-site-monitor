@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 )
 
 func main() {
@@ -63,9 +64,12 @@ func iniciarMonitoramento() {
 		"https://www.youtube.com",
 	}
 
-	for i, urlSite := range sites {
-		fmt.Println("Testando site", i, ":", urlSite)
-		testaSite(urlSite)
+	for i := 0; i < 5; i++ {
+		for i, urlSite := range sites {
+			fmt.Println("Testando site", i, ":", urlSite)
+			testaSite(urlSite)
+		}
+		time.Sleep(5 * time.Second)
 	}
 }
 
