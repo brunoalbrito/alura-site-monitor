@@ -63,14 +63,19 @@ func iniciarMonitoramento() {
 		"https://www.youtube.com",
 	}
 
-	for _, site := range sites {
-		response, _ := http.Get(site)
+	for i, urlSite := range sites {
+		fmt.Println("Testando site", i, ":", urlSite)
+		testaSite(urlSite)
+	}
+}
 
-		if response.StatusCode == 200 {
-			fmt.Println("Site:", site, "foi carregado com sucesso")
-		} else {
-			fmt.Println("Site:", site, "esta com problemas. Status Code:", response.StatusCode)
-		}
+func testaSite(urlSite string) {
+	response, _ := http.Get(urlSite)
+
+	if response.StatusCode == 200 {
+		fmt.Println("Site:", urlSite, "foi carregado com sucesso")
+	} else {
+		fmt.Println("Site:", urlSite, "esta com problemas. Status Code:", response.StatusCode)
 	}
 }
 
